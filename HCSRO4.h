@@ -1,6 +1,5 @@
 /*
   HCSRO4.h - Library HCSRO4 sensor.
-  Created by Denis Immoos <denisimmoos@gmail.com>.
   Released into the public domain.
 */
 
@@ -15,8 +14,7 @@ class HCSRO4
   public:
 
     HCSRO4(int trigpin, int echopin);
-    void GetDistInCm();
-    float distincm;
+    float GetDistInCm();
 
   private:
 

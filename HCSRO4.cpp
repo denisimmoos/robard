@@ -11,12 +11,12 @@ HCSRO4::HCSRO4(int trigpin, int echopin) {
   pinMode(trigpin, OUTPUT); // Sets the trigPin as an Output
   pinMode(echopin, INPUT); // Sets the echoPin as an Input
 
-  int _trigpin = trigpin;
-  int _echopin = echopin;
+  _trigpin = trigpin;
+  _echopin = echopin;
 
 }
 
-HCSRO4::GetDistInCm() {
+float HCSRO4::GetDistInCm() {
 
   digitalWrite(_trigpin,LOW);
   delayMicroseconds(2);
@@ -28,6 +28,6 @@ HCSRO4::GetDistInCm() {
   _duration = pulseIn(_echopin,HIGH);
   _distincm = (_duration - _delay_ms)* 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
 
-  distincm = _distincm
+  return _distincm;
 
 }
