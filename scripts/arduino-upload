@@ -1,0 +1,10 @@
+#!/bin/bash
+if [ -z "$1" ];then
+
+	echo "usage: $0 sketch.ino"
+	exit 1
+fi
+arduino-cli compile --fqbn arduino:avr:mega $1 && \
+arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:mega $1 && \
+echo "success" && \
+minicom -D /dev/ttyACM0 #-b 9600
