@@ -15,7 +15,6 @@ void setup() {
 void loop() {
 
   float hoho = cat_sensor.distincm;
-
   Serial.println(hoho);
 
 }
