@@ -18,6 +18,9 @@ HCSRO4::HCSRO4(int trigpin, int echopin) {
 
 float HCSRO4::GetDistInCm() {
 
+  float _distincm;
+  float _duration;
+
   digitalWrite(_trigpin,LOW);
   delayMicroseconds(2);
   digitalWrite(_trigpin,HIGH);

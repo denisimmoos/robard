@@ -14,15 +14,26 @@ class HCSRO4
   public:
 
     HCSRO4(int trigpin, int echopin);
+
     float GetDistInCm();
+
+
+    // Setter
+    // Use this to change the delay
+    void setDelayInMs(int d) {
+      _delay_ms = d;
+    }
+
+    // Getter
+    int getDelayInMs() {
+      return _delay_ms;
+    }
 
   private:
 
-    float _distincm;
-    float _duration;
-    int _delay_ms = 10;
     int _trigpin;
     int _echopin;
+    int _delay_ms = 10;
 
 };
 

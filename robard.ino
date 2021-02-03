@@ -16,6 +16,7 @@ void setup() {
 
 void loop() {
 
+//  Serial.println(cat_sensor.getDelayInMs());
   Serial.println(cat_sensor.GetDistInCm());
 
 }
