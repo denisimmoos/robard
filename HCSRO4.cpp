@@ -8,12 +8,17 @@
 
 HCSRO4::HCSRO4(int trigpin, int echopin) {
 
-  pinMode(trigpin, OUTPUT); // Sets the trigPin as an Output
-  pinMode(echopin, INPUT); // Sets the echoPin as an Input
-
   _trigpin = trigpin;
   _echopin = echopin;
 
+}
+
+void HCSRO4::begin() {
+  // PinModes setzen
+  // die Pins selbst sind aus dem Konstruktor schon bekannt,
+  // deshalb verwenden wir die privaten Membervariablen.
+  pinMode(_trigpin, OUTPUT); // Sets the trigPin as an Output
+  pinMode(_echopin, INPUT); // Sets the echoPin as an Input
 }
 
 float HCSRO4::GetDistInCm() {

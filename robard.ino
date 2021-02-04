@@ -5,11 +5,11 @@
 #define CatTriggerPin 31
 #define CatEchoPin 30
 
-
 HCSRO4 cat_sensor(CatTriggerPin, CatEchoPin);
 
 void setup() {
 
+  cat_sensor.begin(); 
   Serial.begin(BaudRate);
 
 }

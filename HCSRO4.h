@@ -15,6 +15,9 @@ class HCSRO4
 
     HCSRO4(int trigpin, int echopin);
 
+    // Zum einmaligen Aufruf in setup()
+    void begin();
+
     float GetDistInCm();
 
 
