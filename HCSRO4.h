@@ -23,20 +23,20 @@ class HCSRO4
 
     // Setter
     // Use this to change the delay
-    void setDelayInMs(int d) {
-      _delay_ms = d;
+    void setDelayInMics(int d) {
+      _delay_mics = d;
     }
 
     // Getter
-    int getDelayInMs() {
-      return _delay_ms;
+    int getDelayInMics() {
+      return _delay_mics;
     }
 
   private:
 
     int _trigpin;
     int _echopin;
-    int _delay_ms = 10;
+    int _delay_mics = 10;
 
 };
 

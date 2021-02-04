@@ -1,0 +1,38 @@
+#include "HCSRO4.h"
+
+//#define BaudRate 9600
+#define BaudRate 115200
+
+#define CatTriggerPin 30
+#define CatEchoPin 31
+
+/*
+  Construct HCSRO4 Sensors
+*/
+
+HCSRO4 CatSensor(CatTriggerPin, CatEchoPin);
+
+void setup() {
+
+  // initial setup of pins
+  // this must be done in setup()
+  CatSensor.begin();
+
+  Serial.begin(BaudRate);
+
+}
+
+void loop() {
+
+  // setter
+  // only necessary if the 10 micro seconds lead to unexpected behavior
+  // Serial.println(cat_sensor.setDelayInMics(15));
+
+  // getter
+  // Serial.println(cat_sensor.getDelayInMics());
+
+
+  // float value 
+  Serial.println(CatSensor.GetDistInCm());
+
+}
