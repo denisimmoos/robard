@@ -1,4 +1,4 @@
-#include "HCSR04.h"
+#include "MyHCSR04.h"
 
 //#define BaudRate 9600
 #define BaudRate 115200
@@ -24,16 +24,16 @@
 */
 
 /*
-  Construct HCSR04 Sensors
+  Construct MyHCSR04 Sensors
 */
 
-HCSR04 CatSensor(CatTriggerPin, CatEchoPin);
+MyHCSR04 CatSensor(CatTriggerPin, CatEchoPin);
 /*
-HCSR04 FrontSensor(FrontTriggerPin, FrontEchoPin);
-HCSR04 BackSensor(BackTriggerPin, BackEchoPin);
-HCSR04 LeftSensor(LeftTriggerPin, LeftEchoPin);
-HCSR04 RightSensor(RightTriggerPin, RightEchoPin);
-HCSR04 BottomSensor(BottomTriggerPin, BottomEchoPin);
+MyHCSR04 FrontSensor(FrontTriggerPin, FrontEchoPin);
+MyHCSR04 BackSensor(BackTriggerPin, BackEchoPin);
+MyHCSR04 LeftSensor(LeftTriggerPin, LeftEchoPin);
+MyHCSR04 RightSensor(RightTriggerPin, RightEchoPin);
+MyHCSR04 BottomSensor(BottomTriggerPin, BottomEchoPin);
 */
 
 void setup() {

@@ -2,11 +2,13 @@
 
 Ardurion code for a robot project I'm working on ...
 
-## HCSR04 Sensor Library
+All libraries written by myself are prefixed with **My***
 
-- [HCSR04.h](HCSR04.h)
-- [HCSR04.cpp](HCSR04.cpp)
-- [HCSR04.ino.example](HCSR04.ino.example)
+## MyHCSR04 Sensor Library
+
+- [MyHCSR04.h](MyHCSR04.h)
+- [MyHCSR04.cpp](MyHCSR04.cpp)
+- [MyHCSR04.ino.example](MyHCSR04.ino.example)
 
 ### Information:
 
@@ -15,7 +17,7 @@ The HC-SR04 Ultrasonic Range Sensor uses non-contact ultrasound sonar to measure
 
 ### Usage: 
 
-Have a look at [HCSR04.ino.example](HCSR04.ino.example)
+Have a look at [MyHCSR04.ino.example](MyHCSR04.ino.example)
 
 
 
