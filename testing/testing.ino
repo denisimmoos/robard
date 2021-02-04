@@ -32,7 +32,7 @@ float Cat_Distance;
   FUNCTIONS
 */
 
-float getHCSRO4Distance(int TriggerPin, int EchoPin){
+float getHCSR04Distance(int TriggerPin, int EchoPin){
 
   pinMode(TriggerPin, OUTPUT);  // Sets the TriggerPin as an Output
   pinMode(EchoPin, INPUT);     // Sets the EchoPin as an Input
@@ -88,7 +88,7 @@ int getIndexOfMinValue(int* array, int size){
 
 void mesure_distances(){
 
-  Cat_Distance = getHCSRO4Distance(CatTriggerPin,CatEchoPin);
+  Cat_Distance = getHCSR04Distance(CatTriggerPin,CatEchoPin);
   Serial.println(Cat_Distance);
 
 }

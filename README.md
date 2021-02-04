@@ -2,15 +2,15 @@
 
 Ardurion code for a robot project I'm working on ...
 
-## HCSRO4 Library
+## HCSR04 Library
 
-- [HCSRO4.h](HCSRO4.h)
-- [HCSRO4.cpp](HCSRO4.cpp)
-- [HCSRO4.example](HCSRO4.example)
+- [HCSR04.h](HCSR04.h)
+- [HCSR04.cpp](HCSR04.cpp)
+- [HCSR04.ino.example](HCSR04.ino.example)
 
 ### Usage: 
 
-Have a look at [HCSRO4.example](HCSRO4.example)
+Have a look at [HCSR04.ino.example](HCSR04.ino.example)
 
 
 
