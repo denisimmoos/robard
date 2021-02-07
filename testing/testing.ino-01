@@ -1,0 +1,70 @@
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <string.h> 
+
+   /* an example of struct */ 
+   struct sensors{ 
+     char name[16];
+     float value;
+   };
+
+/* qsort struct comparision function (value float field) */ 
+int struct_cmp_by_value(const void *a, const void *b) 
+{ 
+    struct sensors *ia = (struct sensors *)a;
+    struct sensors *ib = (struct sensors *)b;
+    return (int)(100.f*ia->value - 100.f*ib->value);
+	/* float comparison: returns negative if b > a 
+	and positive if a > b. We multiplied result by 100.0
+	to preserve decimal fraction */ 
+ 
+} 
+
+/* Example struct array printing function */ 
+void print_struct_array(struct sensors *array, size_t len) 
+{ 
+    size_t i;
+ 
+    for(i=0; i<len; i++) 
+        Serial.println(printf("[ product: %s \t price: $%.2f ]\n", array[i].name, array[i].value));
+ 
+    puts("--");
+} 
+
+char pos_struct_array(struct sensors *array, int pos) 
+{ 
+    return array[pos].name;
+} 
+
+
+void setup() {
+
+  
+
+  Serial.begin(9600);
+
+
+ 
+
+
+}
+
+void loop() {
+
+struct sensors structs[] = {
+	{"mp3 player", 299.0f}, 
+	{"plasma tv", 2200.0f}, 
+        {"notebook", 1300.0f}, 
+	{"smartphone", 499.99f}, 
+        {"dvd player", 150.0f}, 
+	{"matches", 0.2f }
+};
+
+
+ /* sort array using qsort functions */ 
+size_t structs_len = sizeof(structs) / sizeof(struct sensors);
+qsort(structs, structs_len, sizeof(struct sensors), struct_cmp_by_value);
+
+ Serial.print(pos_struct_array(structs, 1));
+
+ }

@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/* an example of struct */
+
+class MyToolz {
+
+public:
+
+struct MySensor{
+  char name[16];
+  float value;
+};
+
+void setMySensors( ?????????????????????? ) {
+	struct MySensor sensors = s;
+};
+
+
+/* qsort struct comparision function (value float field) */
+int struct_cmp_by_value(const void *a, const void *b)
+{
+    struct MySensor *ia = (struct MySensor *)a;
+    struct MySensor *ib = (struct MySensor *)b;
+    return (int)(100.f*ia->value - 100.f*ib->value);
+	/* float comparison: returns negative if b > a
+	and positive if a > b. We multiplied result by 100.0
+	to preserve decimal fraction */
+
+}
+
+char *pos_struct_array(int Pos)
+{
+	struct MySensor *array;
+	size_t sensors_len = sizeof(sensors) / sizeof(struct MySensor);
+	qsort(sensors, sensors_len, sizeof(struct MySensor), struct_cmp_by_value);
+    	return array[Pos].name;
+}
+
+};
+
+
+MyToolz Huhu;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+
+	Huhu.setMySensors({{"red",55.4}});
+	Serial.println(Huhu.pos_struct_array(0));
+
+}

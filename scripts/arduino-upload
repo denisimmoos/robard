@@ -7,4 +7,4 @@ fi
 arduino-cli compile --fqbn arduino:avr:mega $1 && \
 arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:mega $1 && \
 echo "success" && \
-minicom -D /dev/ttyACM0 #-b 9600
+minicom -D /dev/ttyACM0 -b $(cat $1 | grep "^#define BaudRate" | awk '{print $3}')

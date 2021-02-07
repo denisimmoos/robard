@@ -1,0 +1,64 @@
+/* class für einen Sensor */
+class Sensor
+{
+  private:
+    const char* identifier;
+    float value;
+
+  public:
+    // Konstruktor
+    Sensor(const char* identifier, float value) : identifier(identifier), value(value) {}
+
+    void setValue(const float newValue)
+    {
+      value = newValue;
+    }
+    float getValue()
+    {
+      return value;
+    }
+
+    const char* getIdentifier()
+    {
+      return identifier;
+    }
+
+static int compareSensors(const void *a, const void *b)
+{
+  return ((Sensor*)(a))->getValue() < ((Sensor*)(b))->getValue() ? -1 : ((Sensor*)(a))->getValue() > ((Sensor*)(b))->getValue() ? 1 : 0;
+}
+
+    const size_t sensorsLength = sizeof(sensors) / sizeof(Sensor);
+  qsort((void*)sensors, sensorsLength, sizeof(Sensor), compareSensors);
+};
+
+// Array für mehrere Sensoren
+Sensor sensors[]
+{
+  {"top", 1.0},
+  {"left", 2.0},
+  {"right", 3.0},
+  {"back", 9.9},
+  {"bottom", 0.2 }
+};
+/*
+const size_t sensorsLength = sizeof(sensors) / sizeof(Sensor);
+
+
+// Vergleichsfunktion
+static int compareSensors(const void *a, const void *b)
+{
+  return ((Sensor*)(a))->getValue() < ((Sensor*)(b))->getValue() ? -1 : ((Sensor*)(a))->getValue() > ((Sensor*)(b))->getValue() ? 1 : 0;
+}
+*/
+void setup()
+{
+  Serial.begin(9600);
+  //qsort((void*)sensors, sensorsLength, sizeof(Sensor), compareSensors);
+  Serial.println(sensors[0].getIdentifier());
+}
+
+void loop()
+{
+
+}
