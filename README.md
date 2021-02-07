@@ -19,11 +19,12 @@ The HC-SR04 Ultrasonic Range Sensor uses non-contact ultrasound sonar to measure
 
 Have a look at [MyHCSR04.ino.example](MyHCSR04.ino.example)
 
-
 ## MyTca9548aTsl2591 Combined Sensor Library
 
 - [MyTca9548aTsl2591.h](MyTca9548aTsl2591.h)
 - [MyTca9548aTsl2591.ino.example](MyTca9548aTsl2591.ino.example)
+
+Basically it makes the Tsl2591 work on the Tca9548a multiplexer by choosing the Tca9548a's i2c-Bus on which the Tsl2591 sensor is connected before performing any operations on the Tsl2591 sensors.
 
 ### Tca9548a Information:
 
