@@ -1,13 +1,14 @@
 
 #include "MyTca9548aTsl2591.h"
 
-MyTca9548aTsl2591 TcaTop(0);
+MyTca9548aTsl2591 TcaTop(0); # <--- i2cBus
 MyTca9548aTsl2591 TcaLeft(1);
 
 #define BaudRate 115200
 
 void setup(void)
 {
+
   Serial.begin(BaudRate);
   while(!Serial);
 
