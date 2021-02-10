@@ -1,5 +1,5 @@
 /*
-  MyHCSR04.h - Library MyHCSR04 sensor.
+  MyTca9548aTsl2591.h
   Released into the public domain.
 */
 
