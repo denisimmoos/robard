@@ -15,6 +15,7 @@ MyHCSR04 BackDistance(36,37);
 
 
 #define BaudRate 115200
+#define KeepDistance 10.0
 
 // 
 /* an example of struct */ 
@@ -61,12 +62,11 @@ void setup(void)
   TopSpectrum.begin();
   LeftSpectrum.begin();
   RightSpectrum.begin();
-  SepctrumBack.begin();
+  BackSpectrum.begin();
 
   // Now we're ready to get readings ... move on to loop()!
 }
 
-:
 void loop(void)
 {
 
@@ -85,7 +85,7 @@ int check_next = 0;
 while (check_next <= 3) {
 
 if ( strcmp(GetSensorNameByPosition(sensors, check_next),"TopSpectrum") == 0 ) { 
-  if (TopDistance.GetDistInCm() < 10) {
+  if (TopDistance.GetDistInCm() < KeepDistance) {
 	check_next += 1;
   	Serial.println("STOOOOOOOP Top");
   	Serial.println(check_next);
@@ -97,7 +97,7 @@ if ( strcmp(GetSensorNameByPosition(sensors, check_next),"TopSpectrum") == 0 ) {
 } 
 
 if ( strcmp(GetSensorNameByPosition(sensors, check_next),"LeftSpectrum") == 0 ) { 
-  if (LeftDistance.GetDistInCm() < 10) {
+  if (LeftDistance.GetDistInCm() < KeepDistance) {
 	check_next += 1;
   	Serial.println("STOOOOOOOP Leeft");
   	Serial.println(check_next);
@@ -108,7 +108,7 @@ if ( strcmp(GetSensorNameByPosition(sensors, check_next),"LeftSpectrum") == 0 ) 
 } 
 
 if ( strcmp(GetSensorNameByPosition(sensors, check_next),"RightSpectrum") == 0 ) { 
-  if (RightDistance.GetDistInCm() < 10) {
+  if (RightDistance.GetDistInCm() < KeepDistance) {
 	check_next += 1;
   	Serial.println("STOOOOOOOP Right");
   	Serial.println(check_next);
@@ -119,7 +119,7 @@ if ( strcmp(GetSensorNameByPosition(sensors, check_next),"RightSpectrum") == 0 )
 } 
 
 if ( strcmp(GetSensorNameByPosition(sensors, check_next),"BackSpectrum") == 0 ) { 
-  if (BackDistance.GetDistInCm() < 10) {
+  if (BackDistance.GetDistInCm() < KeepDistance) {
 	check_next += 1;
   	Serial.println("STOOOOOOOP Back");
   	Serial.println(check_next);
