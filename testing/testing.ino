@@ -78,11 +78,12 @@ struct Sensors sensors[] = {
 };
 
 size_t sensors_len = sizeof(sensors) / sizeof(struct Sensors);
+
 qsort(sensors, sensors_len, sizeof(struct Sensors), CompareSensorsByValue);
 
 int check_next = 0;
 
-while (check_next <= 3) {
+while (check_next < sensor_len) {
 
 if ( strcmp(GetSensorNameByPosition(sensors, check_next),"TopSpectrum") == 0 ) { 
   if (TopDistance.GetDistInCm() < KeepDistance) {
