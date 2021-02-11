@@ -38,7 +38,7 @@ Finally, a way to get up to 8 same-address I2C devices hooked up to one microcon
 
 Using it is fairly straight-forward: the multiplexer itself is on I2C address 0x70 (but can be adjusted from 0x70 to 0x77) and you simply write a single byte with the desired multiplexed output number to that port, and bam - any future I2C packets will get sent to that port. In theory, you could have 8 of these multiplexers on each of 0x70-0x77 addresses in order to control 64 of the same-I2C-addressed-part.
 
-Like all Adafruit breakouts, we put this nice chip on a breakout for you so you can use it on a breadboard with capacitors, and pullups and pulldowns to make usage a snap. Some header is required and once soldered in you can plug it into a solderless-breadboard. The chip itself is 3V and 5V compliant so you can use it with any logic level.
+Like all Adafruit breakouts, this nice chip has a breakout for you so you can use it on a breadboard with capacitors, and pullups and pulldowns to make usage a snap. Some header is required and once soldered in you can plug it into a solderless-breadboard. The chip itself is 3V and 5V compliant so you can use it with any logic level.
 
 #### Technical Details
 
@@ -65,7 +65,6 @@ The built in ADC means you can use this with any microcontroller, even if it doe
 - This board/chip uses I2C 7-bit address 0x29 (fixed)
 - Dimensions: 19mm x 16mm x 1mm / .75" x .63" x .04"
 - Weight: 1.1g
-
 
 
 ### Usage:

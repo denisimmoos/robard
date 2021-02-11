@@ -1,5 +1,4 @@
-#include <stdio.h>      /* printf */
-#include <stdlib.h>     /* qsort */
+
 using namespace std;
 
 #include "MyTca9548aTsl2591.h"
@@ -18,55 +17,33 @@ MyHCSR04 TopDist(30,31);
 #define BaudRate 9600
 #define KeepDist 10.0
 
+//
+/* an example of struct */
 struct Sensors{
-      char name[10];
-      float value;
+  char name[10];
+  float value;
 };
 
+/* qsort struct comparision function (value float field) */
+int CompareSensorsByValue(const void *a, const void *b)
+{
+    struct Sensors *ia = (struct Sensors *)a;
+    struct Sensors *ib = (struct Sensors *)b;
+    return (int)(100.f*ia->value - 100.f*ib->value);
+	/* float comparison: returns negative if b > a
+	and positive if a > b. We multiplied result by 100.0
+	to preserve decimal fraction */
 
-class MyTools {
+}
 
-  private:
-    struct _MyStruct;
+char *GetSensorNameByPosition(struct Sensors *array, int pos)
+{
+    return array[pos].name;
+}
 
-  public:
-
-  MyTools(struct MyStruct){
- 		_MyStruct = MyStruct;
-	};
-
-  int CompareSensorsByValue(const void *a, const void *b)
-  {
-      struct _MyStruct *ia = (struct _MyStruct *)a;
-      struct _MyStruct *ib = (struct _MyStruct *)b;
-      return (int)(100.f*ia->value - 100.f*ib->value);
-    /* float comparison: returns negative if b > a
-    and positive if a > b. We multiplied result by 100.0
-    to preserve decimal fraction */
-
-  }
-
-
-  size_t sensors_len = sizeof(_MyStruct) / sizeof(struct _MyStruct);
-  qsort(_MyStruct, sensors_len, sizeof(struct _MyStruct), CompareSensorsByValue);
-
-
-    //
-    /* an example of struct */
-    /*
-    /* qsort struct comparision function (value float field) */
-
-    char *GetSensorNameByPosition( int pos)
-    {
-        return _MyStruct[pos].name;
-    }
-
-    float GetSensorValueByPosition(int pos)
-    {
-        return _MyStruct[pos].value;
-    }
-
-
+float GetSensorValueByPosition(struct Sensors *array, int pos)
+{
+    return array[pos].value;
 }
 
 
@@ -100,15 +77,12 @@ struct Sensors sensors[] = {
 	{"BackSpect", 	BackSpect.getFullSpectrum()}
 };
 
-MyTools Mytool(sensors);
+size_t sensors_len = sizeof(sensors) / sizeof(struct Sensors);
 
-Serial.prinln(MyTool.GetSensorNameByPosition(0));
+qsort(sensors, sensors_len, sizeof(struct Sensors), CompareSensorsByValue);
 
 int check_next = 0;
 
-}
-
-/*
 while (check_next < sensors_len) {
 
   	Serial.println("HUUUU Top");
@@ -162,4 +136,5 @@ if ( strcmp(GetSensorNameByPosition(sensors, check_next),"BackSpect") == 0 ) {
 }
 
 }
-*/
+
+}
