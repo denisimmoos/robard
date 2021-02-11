@@ -1,5 +1,6 @@
 /*
-  MyHCSR04.h - Library MyHCSR04 sensor.
+  MyHCSR04.h - Library for MyHCSR04 sensor.
+  Written by Denis Immoos 
   Released into the public domain.
 */
 

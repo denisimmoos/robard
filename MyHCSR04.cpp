@@ -1,5 +1,6 @@
 /*
-  HCSO4.cpp - Library for HCSO4 sensor.
+  MyHCS04.cpp - Library for HCS04 sensor.
+  Written by Denis Immoos 
   Released into the public domain.
 */
 
