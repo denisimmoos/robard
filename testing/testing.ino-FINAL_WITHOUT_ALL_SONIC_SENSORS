@@ -1,8 +1,3 @@
-/*
-  robard.ino - A robot which follows the light
-  Programmed by Denis Immoos
-*/
-
 using namespace std;
 
 #include "MyWheels.h"
@@ -17,15 +12,13 @@ MyTca9548aTsl2591 BackSpect(3);
 
 #include "MyHCSR04.h"
 MyHCSR04 AdvDist(30,31);
-MyHCSR04 LeftDist(32,33);
-MyHCSR04 RightDist(34,35);
-MyHCSR04 BackDist(36,37);
+//MyHCSR04 LeftDist(32,33);
+//MyHCSR04 RightDist(34,35);
+//MyHCSR04 BackDist(36,37);
 
-#define PrintSerial 1
 #define BaudRate 9600
 #define KeepDist 12.0
 #define StartDist 5.0
-
 
 struct Sensors{
   char name[10];
@@ -60,21 +53,17 @@ float GetSensorValueByPosition(struct Sensors *array, int pos)
 void setup(void)
 {
 
-  if ( PrintSerial == 1 ) {
-    Serial.begin(BaudRate);
-    while(!Serial);
-  }
+  Serial.begin(BaudRate);
+  while(!Serial);
 
   // set pins for MyWheels
   Go.begin();
 
-  // set pins for MyHCSR04
   AdvDist.begin();
-  LeftDist.begin();
-  RightDist.begin();
-  BackDist.begin();
+ // LeftDist.begin();
+//  RightDist.begin();
+ // BackDist.begin();
 
-  // set pins for MyTca9548aTsl2591
   AdvSpect.begin();
   LeftSpect.begin();
   RightSpect.begin();
@@ -107,75 +96,59 @@ int check_next = 0;
 
 while (check_next < sensors_len) {
 
-  if ( PrintSerial == 1 ) {
   	Serial.println("GetSensorNameByPosition");
   	Serial.println(GetSensorNameByPosition(sensors, check_next));
-  }
 
-  // Advance
+if ( strcmp(GetSensorNameByPosition(sensors, check_next),"AdvSpect") == 0 ) {
+  if (AdvDist.GetDistInCm() < KeepDist) {
+    Go.stop();
+	  check_next += 1;
+  	Serial.println("STOP Adv");
+  } else {
+  	Serial.println("GO Adv");
+     Go.advance(SPEED);
+	  break;
+ }
 
-  if ( strcmp(GetSensorNameByPosition(sensors, check_next),"AdvSpect") == 0 ) {
+}
 
-    if (AdvDist.GetDistInCm() < KeepDist) {
-      Go.stop();
-	    check_next += 1;
-      if ( PrintSerial == 1 ) { Serial.println("STOP Adv"); }
-    } else {
-      if ( PrintSerial == 1 ) { Serial.println("GO Adv"); }
-      Go.advance(SPEED);
-	    break;
-    }
+if ( strcmp(GetSensorNameByPosition(sensors, check_next),"LeftSpect") == 0 ) {
+  if (AdvDist.GetDistInCm() < KeepDist) {
+    Go.stop();
+	  check_next += 1;
+  	Serial.println("STOP Left");
+  } else {
+  	Serial.println("GO Left");
+    Go.left(SPEED);
+	  break;
+ }
+}
 
-  }
+if ( strcmp(GetSensorNameByPosition(sensors, check_next),"RightSpect") == 0 ) {
+  if (AdvDist.GetDistInCm() < KeepDist) {
+    Go.stop();
+	  check_next += 1;
+  	Serial.println("STOP Right");
+  } else {
+  	Serial.println("GO Right");
+    Go.left(SPEED);
+	  break;
+ }
+}
 
-  // Left
+if ( strcmp(GetSensorNameByPosition(sensors, check_next),"BackSpect") == 0 ) {
+  if (AdvDist.GetDistInCm() < KeepDist) {
+    Go.stop();
+	  check_next += 1;
+  	Serial.println("STOP Back");
+  } else {
+  	Serial.println("GO BACK");
+    Go.back(SPEED);
+	  break;
+ }
 
-  if ( strcmp(GetSensorNameByPosition(sensors, check_next),"LeftSpect") == 0 ) {
+}
 
-    if (LeftDist.GetDistInCm() < KeepDist) {
-      Go.stop();
-	    check_next += 1;
-      if ( PrintSerial == 1 ) { Serial.println("STOP Left"); }
-    } else {
-      if ( PrintSerial == 1 ) { Serial.println("GO Left"); }
-      Go.left(SPEED);
-	    break;
-    }
-
-  }
-
-  // Right
-
-  if ( strcmp(GetSensorNameByPosition(sensors, check_next),"RightSpect") == 0 ) {
-
-    if (RightDist.GetDistInCm() < KeepDist) {
-      Go.stop();
-	    check_next += 1;
-      if ( PrintSerial == 1 ) { Serial.println("STOP Right"); }
-    } else {
-      if ( PrintSerial == 1 ) { Serial.println("GO Right"); }
-      Go.left(SPEED);
-	    break;
-    }
-
-  }
-
-  // Back
-
-  if ( strcmp(GetSensorNameByPosition(sensors, check_next),"BackSpect") == 0 ) {
-
-    if (BackDist.GetDistInCm() < KeepDist) {
-      Go.stop();
-	    check_next += 1;
-      if ( PrintSerial == 1 ) { Serial.println("STOP Back"); }
-    } else {
-      if ( PrintSerial == 1 ) { Serial.println("GO Back"); }
-      Go.back(SPEED);
-	    break;
-    }
-
-  }
-
-} // end while
+}
 
 }
