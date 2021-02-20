@@ -6,6 +6,29 @@ Ardurion code for a robot project I'm working on ...
 
 All libraries written by myself are prefixed with **My***
 
+## MyWheels
+
+- [MyWheels.h](MyWheels.h)
+- [MyWheels.ino.example](MyWheels.ino.example)
+
+This class makes the wheels turn round ...,
+round and round ...,
+round and round ...,
+
+this class makes the wheels turn round,
+early in the morning ...
+
+This class makes the wheels turn round
+round and round ....,
+if the battery is loaded.
+
+All turns are relative to the center perspective of the robot.
+
+
+### Usage:
+
+Have a look at [MyWheels.ino.example](MyWheels.ino.example)
+
 ## MyHCSR04 Sensor Library
 
 - [MyHCSR04.h](MyHCSR04.h)
