@@ -6,5 +6,4 @@ if [ -z "$1" ];then
 fi
 arduino-cli compile --fqbn arduino:avr:mega $1 && \
 arduino-cli upload -p /dev/ttyACM0 --fqbn arduino:avr:mega $1 && \
-echo "success" && \
-minicom -D /dev/ttyACM0 -b $(cat $1 | grep "^#define BaudRate" | awk '{print $3}')
+$(dirname $0)/read_serial.py

@@ -21,7 +21,8 @@ MyHCSR04 LeftDist(32,33);
 MyHCSR04 RightDist(34,35);
 MyHCSR04 BackDist(36,37);
 
-#define PrintSerial 1
+#define PrintSerial 0
+#define PrintJson 1
 #define BaudRate 9600
 #define KeepDist 12.0
 #define StartDist 5.0
@@ -60,7 +61,7 @@ float GetSensorValueByPosition(struct Sensors *array, int pos)
 void setup(void)
 {
 
-  if ( PrintSerial == 1 ) {
+  if ( PrintSerial == 1 or PrintJson == 1) {
     Serial.begin(BaudRate);
     while(!Serial);
   }
@@ -92,6 +93,7 @@ void setup(void)
 void loop(void)
 {
 
+
 struct Sensors sensors[] = {
 	{"AdvSpect", 	  AdvSpect.getFullSpectrum()},
 	{"LeftSpect", 	LeftSpect.getFullSpectrum()},
@@ -105,12 +107,23 @@ qsort(sensors, sensors_len, sizeof(struct Sensors), CompareSensorsByValue);
 
 int check_next = 0;
 
+if ( PrintJson == 1 ) {
+  	Serial.print("{");
+    for (int x=0; x<sensors_len; x++  ) {
+  	  Serial.print('"');
+  	  Serial.print(GetSensorNameByPosition(sensors,x));
+  	  Serial.print('"');
+  	  Serial.print(":");
+  	  Serial.print(GetSensorValueByPosition(sensors,x));
+      if ( x + 1 < sensors_len ) {
+  	    Serial.print(",");
+      }
+    }
+  	Serial.println("}");
+}
+
 while (check_next < sensors_len) {
 
-  if ( PrintSerial == 1 ) {
-  	Serial.println("GetSensorNameByPosition");
-  	Serial.println(GetSensorNameByPosition(sensors, check_next));
-  }
 
   // Advance
 
