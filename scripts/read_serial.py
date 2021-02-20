@@ -4,7 +4,7 @@ import os
 import json
 import serial
 
-ser = serial.Serial('/dev/ttyACM0', 9600, timeout = 60)
+ser = serial.Serial('/dev/ttyACM0',9600)
 ser.flushInput()
 
 def is_json(myjson):
