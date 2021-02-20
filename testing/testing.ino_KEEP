@@ -7,6 +7,10 @@ MyWheels Go;
 
 void setup()
 {
+  
+  // delay to avoid ardurino hickup
+  delay(5000);
+
   Go.begin();
 
 Go.advance(SPEED);
