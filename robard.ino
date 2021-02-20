@@ -27,7 +27,6 @@ MyHCSR04 BackDist(36,37);
 #define KeepDist 12.0
 #define StartDist 5.0
 
-
 struct Sensors{
   char name[10];
   float value;
@@ -97,8 +96,9 @@ void loop(void)
 {
 
 
+// Creat a sensor struct 
 struct Sensors sensors[] = {
-	{"AdvSpect", 	  AdvSpect.getFullSpectrum()},
+	{"AdvSpect", 	AdvSpect.getFullSpectrum()},
 	{"LeftSpect", 	LeftSpect.getFullSpectrum()},
 	{"RightSpect",  RightSpect.getFullSpectrum()},
 	{"BackSpect", 	BackSpect.getFullSpectrum()}
@@ -109,6 +109,9 @@ size_t sensors_len = sizeof(sensors) / sizeof(struct Sensors);
 qsort(sensors, sensors_len, sizeof(struct Sensors), CompareSensorsByValue);
 
 int check_next = 0;
+
+// Output a json string which will hopefully be read by the rasberry-pi and put to influxdb
+// Have a look at scripts/read_serial.py
 
 if ( PrintJson == 1 ) {
   	Serial.print("{");
@@ -125,8 +128,9 @@ if ( PrintJson == 1 ) {
   	Serial.println("}");
 }
 
-while (check_next < sensors_len) {
+// loop to find the brightest sensor wich is not to close to a wall - KeepDist 
 
+while (check_next < sensors_len) {
 
   // Advance
 
