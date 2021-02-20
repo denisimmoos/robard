@@ -11,7 +11,7 @@ All libraries written by myself are prefixed with **My***
 - [MyWheels.h](MyWheels.h)
 - [MyWheels.ino.example](MyWheels.ino.example)
 
-'''
+```
 This class makes the wheels turn round ...,
 
 round and round ...,
@@ -27,7 +27,8 @@ This class makes the wheels turn round ...,
 round and round ...,
 
 if the battery is loaded ...
-'''
+```
+
 
 **All turns are relative to the center perspective of the robot.**
 
