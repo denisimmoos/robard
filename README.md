@@ -12,17 +12,22 @@ All libraries written by myself are prefixed with **My***
 - [MyWheels.ino.example](MyWheels.ino.example)
 
 This class makes the wheels turn round ...,
-round and round ...,
+
 round and round ...,
 
-this class makes the wheels turn round,
+round and round ...,
+
+This class makes the wheels turn round,
+
 early in the morning ...
 
-This class makes the wheels turn round
-round and round ....,
-if the battery is loaded.
+This class makes the wheels turn round ...,
 
-All turns are relative to the center perspective of the robot.
+round and round ...,
+
+if the battery is loaded ...
+
+*All turns are relative to the center perspective of the robot.*
 
 
 ### Usage:
