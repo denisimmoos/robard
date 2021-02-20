@@ -1,126 +1,200 @@
-#define SPEED 200
-#define TURN_SPEED 160
+/*
+  robard.ino - A robot which follows the light
+  Programmed by Denis Immoos
+*/
+
+using namespace std;
 
 #include "MyWheels.h"
-
+#define SPEED 100
 MyWheels Go;
 
-void setup()
+#include "MyTca9548aTsl2591.h"
+MyTca9548aTsl2591 AdvSpect(0);  //<--- i2cBus
+MyTca9548aTsl2591 LeftSpect(1);
+MyTca9548aTsl2591 RightSpect(2);
+MyTca9548aTsl2591 BackSpect(3);
+
+#include "MyHCSR04.h"
+MyHCSR04 AdvDist(30,31);
+MyHCSR04 LeftDist(32,33);
+MyHCSR04 RightDist(34,35);
+MyHCSR04 BackDist(36,37);
+
+#define PrintSerial 0
+#define PrintJson 1
+#define BaudRate 9600
+#define KeepDist 12.0
+#define StartDist 5.0
+
+
+struct Sensors{
+  char name[10];
+  float value;
+};
+
+/* qsort struct comparision function (value float field) */
+int CompareSensorsByValue(const void *a, const void *b)
 {
-  Go.begin();
+    /*
+	float comparison: returns negative if b > a
+	and positive if a > b. We multiplied result by 100.0
+	to preserve decimal fraction
+    */
 
-Go.advance(SPEED);
-     delay(1000);
-     Go.stop();
-     delay(1000);
-
-Go.back(SPEED);
-      delay(1000);
-      Go.stop();
-      delay(1000);
-
-Go.left_turn(TURN_SPEED);
-      delay(1000);
-      Go.stop();
-      delay(1000);
-
-Go.right_turn(TURN_SPEED);
-     delay(1000);
-     Go.stop();
-     delay(1000);
-
-Go.right(SPEED); //right shift
-     delay(1000);
-     Go.stop();
-     delay(1000);
-
-/* The same as Go.right
-Go.right_shift(SPEED,SPEED,SPEED,SPEED); //right shift
-     delay(1000);
-     Go.stop();
-     delay(1000);
-*/
-
-
-Go.left(SPEED); //left shift
-     delay(1000);
-     Go.stop();
-     delay(1000);
-
-/* The same as Go.left
-Go.left_shift(SPEED,SPEED,SPEED,SPEED); //left shift
-     delay(1000);
-     Go.stop();
-     delay(1000);
-*/
-
-Go.right_diag_advance(SPEED);
-     delay(1000);
-     Go.stop();
-	 delay(1000);
-
-
-/* Same as Go.right_shift
-   Go.right_shift(0,SPEED,0,SPEED);
-        delay(1000);
-        Go.stop();
-   	 delay(1000);
-*/
-
-Go.right_diag_back(SPEED);
-     delay(1000);
-     Go.stop();
-	 delay(1000);
-
-/* Same as Go.right_shift
-   Go.right_shift(SPEED,0,SPEED,0);
-        delay(1000);
-        Go.stop();
-   	 delay(1000);
-*/
-
-
-Go.left_diag_advance(SPEED);
-     delay(1000);
-     Go.stop();
-	 delay(1000);
-
-
-/* Same as Go.left_shift
-
-   Go.left_shift(SPEED,0,SPEED,0);
-        delay(1000);
-        Go.stop();
-   	 delay(1000);
-*/
-
-Go.left_diag_back(SPEED);
-     delay(1000);
-     Go.stop();
-	 delay(1000);
-
-
-/* Same as Go.left_shift
-
-   Go.left_shift(0,SPEED,0,SPEED);
-        delay(1000);
-        Go.stop();
-   	 delay(1000);
-*/
-
-
-Go.turn_clockwise(SPEED);
-     delay(1000);
-     Go.stop();
-	 delay(1000);
-
-Go.turn_counter_clockwise(SPEED);
-     delay(1000);
-     Go.stop();
-	 delay(1000);
-
+    struct Sensors *ia = (struct Sensors *)a;
+    struct Sensors *ib = (struct Sensors *)b;
+    return (int)(100.f*ia->value - 100.f*ib->value);
 }
 
-void loop(){
+char *GetSensorNameByPosition(struct Sensors *array, int pos)
+{
+    return array[pos].name;
+}
+
+float GetSensorValueByPosition(struct Sensors *array, int pos)
+{
+    return array[pos].value;
+}
+
+
+void setup(void)
+{
+
+  // delay 5s - because otherwise ardurino has a hickup
+  delay(5000);
+
+  if ( PrintSerial == 1 or PrintJson == 1) {
+    Serial.begin(BaudRate);
+    while(!Serial);
+  }
+
+  // set pins for MyWheels
+  Go.begin();
+
+  // set pins for MyHCSR04
+  AdvDist.begin();
+  LeftDist.begin();
+  RightDist.begin();
+  BackDist.begin();
+
+  // set pins for MyTca9548aTsl2591
+  AdvSpect.begin();
+  LeftSpect.begin();
+  RightSpect.begin();
+  BackSpect.begin();
+
+
+  // almost touch the sensor to make it move
+  while (AdvDist.GetDistInCm() > StartDist) {
+    delay(500);
+  }
+
+  // Now we're ready to get readings ... move on to loop()!
+}
+
+void loop(void)
+{
+
+
+struct Sensors sensors[] = {
+	{"AdvSpect", 	  AdvSpect.getFullSpectrum()},
+	{"LeftSpect", 	LeftSpect.getFullSpectrum()},
+	{"RightSpect",  RightSpect.getFullSpectrum()},
+	{"BackSpect", 	BackSpect.getFullSpectrum()}
+};
+
+// sort the values by biggest 0
+size_t sensors_len = sizeof(sensors) / sizeof(struct Sensors);
+qsort(sensors, sensors_len, sizeof(struct Sensors), CompareSensorsByValue);
+
+int check_next = 0;
+
+if ( PrintJson == 1 ) {
+  	Serial.print("{");
+    for (int x=0; x<sensors_len; x++  ) {
+  	  Serial.print('"');
+  	  Serial.print(GetSensorNameByPosition(sensors,x));
+  	  Serial.print('"');
+  	  Serial.print(":");
+  	  Serial.print(GetSensorValueByPosition(sensors,x));
+      if ( x + 1 < sensors_len ) {
+  	    Serial.print(",");
+      }
+    }
+  	Serial.println("}");
+}
+
+while (check_next < sensors_len) {
+
+
+  // Advance
+
+  if ( strcmp(GetSensorNameByPosition(sensors, check_next),"AdvSpect") == 0 ) {
+
+    if (AdvDist.GetDistInCm() < KeepDist) {
+      Go.stop();
+	    check_next += 1;
+      if ( PrintSerial == 1 ) { Serial.println("STOP Adv"); }
+    } else {
+      if ( PrintSerial == 1 ) { Serial.println("GO Adv"); }
+      Go.advance(SPEED);
+	    break;
+    }
+
+  }
+
+  // Left
+
+  if ( strcmp(GetSensorNameByPosition(sensors, check_next),"LeftSpect") == 0 ) {
+
+    if (AdvDist.GetDistInCm() < KeepDist) {
+    //if (LeftDist.GetDistInCm() < KeepDist) {
+      Go.stop();
+	    check_next += 1;
+      if ( PrintSerial == 1 ) { Serial.println("STOP Left"); }
+    } else {
+      if ( PrintSerial == 1 ) { Serial.println("GO Left"); }
+      Go.left(SPEED);
+	    break;
+    }
+
+  }
+
+  // Right
+
+  if ( strcmp(GetSensorNameByPosition(sensors, check_next),"RightSpect") == 0 ) {
+
+    if (AdvDist.GetDistInCm() < KeepDist) {
+    //if (RightDist.GetDistInCm() < KeepDist) {
+      Go.stop();
+	    check_next += 1;
+      if ( PrintSerial == 1 ) { Serial.println("STOP Right"); }
+    } else {
+      if ( PrintSerial == 1 ) { Serial.println("GO Right"); }
+      Go.right(SPEED);
+	    break;
+    }
+
+  }
+
+  // Back
+
+  if ( strcmp(GetSensorNameByPosition(sensors, check_next),"BackSpect") == 0 ) {
+
+    if (AdvDist.GetDistInCm() < KeepDist) {
+    //if (BackDist.GetDistInCm() < KeepDist) {
+      Go.stop();
+	    check_next += 1;
+      if ( PrintSerial == 1 ) { Serial.println("STOP Back"); }
+    } else {
+      if ( PrintSerial == 1 ) { Serial.println("GO Back"); }
+      Go.back(SPEED);
+	    break;
+    }
+
+  }
+
+} // end while
 
 }
