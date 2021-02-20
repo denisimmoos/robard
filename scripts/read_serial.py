@@ -22,7 +22,8 @@ while True:
 
         if is_json(utf8_msg):
 	  # later on this will log to influxdb
-          os.system("echo \"" + utf8_msg + "\" >/dev/null &" )
+          os.system("echo \"" + utf8_msg + "\" >/tmp/subprocess.log &")
+          #pass
 
     except:
         print("Keyboard Interrupt")
